@@ -1,6 +1,5 @@
 import customtkinter as ctk
 from tkinter.ttk import Treeview, Style, Combobox
-from models.medicamento import MedicamentoMarca
 
 class VentasView(ctk.CTkFrame):
     def __init__(self, master, content_frame, controller, clientes_controller, inventario_controller):

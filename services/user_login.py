@@ -1,5 +1,6 @@
-from models.cliente import Cliente
-from models.empleado import Empleado
+from user_factory import UserFactory
+
+
 class UserLogin:
     _instance = None
 
@@ -18,34 +19,13 @@ class UserLogin:
         hashed_password = self._hash_password(password)
         user_data = self.db_manager.user_repo.get_user(username)
 
-        if user_data and user_data['password'] == hashed_password:
-            self.user = self._create_user_object(user_data)
+        if user_data and user_data["password"] == hashed_password:
+            self.user = UserFactory.create_user(user_data)
             return self.user
         return None
 
     def _hash_password(self, password):
         return password  # Simulación para el ejemplo
-
-    def _create_user_object(self, user_data):
-        if user_data['role'] == 'admin':
-            return Empleado(
-                id_persona=user_data['id_persona'],
-                nombre=user_data['nombre'],
-                telefono=user_data['telefono'],
-                email=user_data['email'],
-                direccion=user_data['direccion'],
-                cargo="Ventas",
-                salario=1000
-            )
-        else:
-            return Cliente(
-                id_persona=user_data['id_persona'],
-                nombre=user_data['nombre'],
-                telefono=user_data['telefono'],
-                email=user_data['email'],
-                direccion=user_data['direccion']
-
-            )
 
     def get_current_user(self):
         return self.user

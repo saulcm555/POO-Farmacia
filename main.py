@@ -1,9 +1,8 @@
 import customtkinter as ctk
-from views.login_view import LoginView
-from views.register_view import RegisterView
+from views.cuentas import LoginView, RegisterView
 from views.main_view import MainView
 from dependency_injector import DependencyInjector
-from view_manager import ViewManager
+from utils.view_manager import ViewManager
 
 
 class MainApp(ctk.CTk):
@@ -16,9 +15,9 @@ class MainApp(ctk.CTk):
 
     def show_login_view(self):
         self.view_manager.show_view(
-            LoginView, 
-            self.di.get_controller("auth_controller"), 
-            self.di.get_controller("user_login")
+            LoginView,
+            self.di.get_controller("auth_controller"),
+            self.di.get_controller("user_login"),
         )
 
     def show_register_view(self):
@@ -31,10 +30,10 @@ class MainApp(ctk.CTk):
             MainView,
             user,
             self.di.get_controller("auth_controller"),
-            self.di.get_controller("inventory_controller"),
+            self.di.get_controller("inventario_controller"),
             self.di.get_controller("ventas_controller"),
             self.di.get_controller("clientes_controller"),
-            self.di.get_controller("user_login")
+            self.di.get_controller("user_login"),
         )
 
     def set_geometry(self, width, height):

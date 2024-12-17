@@ -2,10 +2,7 @@ from .interfaces import IConnection, ISQLOperations
 from .interfaces import (
     IUserRepository,
     ISalesRepository,
-    ISalesDetailRepository,
     IMedicineRepository,
-    IBillRepository,
-    ISalesRepository,
 )
 
 
@@ -17,9 +14,7 @@ class DatabaseManager:
         
         user_repo: IUserRepository,
         sales_repo: ISalesRepository,
-        sales_detail_repo: ISalesDetailRepository,
         medicine_repo: IMedicineRepository,
-        bill_repo: IBillRepository,
     ):
         self.db_connection = db_connection
         self.connection = self.db_connection.connect()
@@ -27,9 +22,7 @@ class DatabaseManager:
 
         self.user_repo = user_repo
         self.sales_repo = sales_repo
-        self.sales_detail_repo = sales_detail_repo
         self.medicine_repo = medicine_repo
-        self.bill_repo = bill_repo
         self.initialize()
 
     def close(self):

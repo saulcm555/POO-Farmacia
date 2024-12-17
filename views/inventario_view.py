@@ -167,14 +167,29 @@ class InventarioView(ctk.CTkFrame):
     def _crear_formulario(self, ventana, medicamento=None):
         fields = ["Codigo", "Nombre", "Proveedor", "Precio", "Fecha_Caducidad", "Stock"]
         entries = {}
+
         for field in fields:
             ctk.CTkLabel(ventana, text=f"{field}:").pack(pady=5)
             entry = ctk.CTkEntry(ventana)
+
             if medicamento:
-                entry.insert(0, getattr(medicamento, f"_{field.lower()}", ""))
+                if field.lower() == "codigo":
+                    entry.insert(0, medicamento._codigo)  
+                elif field.lower() == "nombre":
+                    entry.insert(0, medicamento._nombre)
+                elif field.lower() == "proveedor":
+                    entry.insert(0, medicamento.proveedor)
+                elif field.lower() == "precio":
+                    entry.insert(0, medicamento._precio)
+                elif field.lower() == "fecha_caducidad":
+                    entry.insert(0, medicamento.fecha_caducidad)
+                elif field.lower() == "stock":
+                    entry.insert(0, medicamento.stock)
+
             entry.pack(pady=5)
             entries[field.lower()] = entry
         return entries
+
 
     def _obtener_datos_formulario(self, entries):
         return {

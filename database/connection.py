@@ -3,9 +3,17 @@ from .interfaces import IConnection
 
 
 class Connection(IConnection):
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(Connection, cls).__new__(cls)
+        return cls._instance
+
     def __init__(self, db_path: str):
-        self.db_path = db_path
-        self.connection = None
+        if not hasattr(self, 'db_path'): 
+            self.db_path = db_path
+            self.connection = None
 
     def connect(self) -> sqlite3.Connection:
         if not self.connection:

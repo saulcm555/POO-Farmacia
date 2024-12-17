@@ -1,4 +1,4 @@
-from models.persona import Persona
+from user_factory import UserFactory
 
 class AuthController:
     def __init__(self, db_manager):
@@ -8,7 +8,7 @@ class AuthController:
         hashed_password = self._hash_password(password)
         user = self.db_manager.user_repo.get_user(username)[0]
         if user and user['password'] == hashed_password:
-            return self._create_user_object(user)
+            return UserFactory.create_user(user)
         return None
     
     def logout(self):
@@ -23,20 +23,3 @@ class AuthController:
     def _hash_password(self, password):
         return password
 
-    def _create_user_object(self, user_data):
-        if user_data['role'] == 'cliente':
-            from models.cliente import Cliente
-            return Cliente(user_data['id_persona'], user_data['nombre'], user_data['telefono'],
-                           user_data['email'], user_data['direccion'])
-        elif user_data['role'] == 'admin':
-            from models.empleado import Empleado
-            return Empleado(user_data['id_persona'], user_data['nombre'], user_data['telefono'],
-                            user_data['email'], user_data['direccion'], 'Administrador', None)
-        else:
-            return Persona(user_data['id_persona'], user_data['nombre'], user_data['telefono'],
-                           user_data['email'], user_data['direccion'])
-            
-            
-            
-            
-            
